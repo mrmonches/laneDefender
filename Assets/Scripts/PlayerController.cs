@@ -16,9 +16,10 @@ public class PlayerController : MonoBehaviour
     private float moveValue;
 
     [SerializeField] private GameObject BulletObject;
-    [SerializeField] private Vector3 BulletSpawnPoint;
+    [SerializeField] private Transform BulletSpawnPoint;
 
-    [SerializeField] private bool CanShoot;
+    private bool canShoot;
+    private bool shootHeld;
 
     private void Awake()
     {
@@ -32,9 +33,21 @@ public class PlayerController : MonoBehaviour
         moveAction.started += MoveAction_started;
         moveAction.canceled += MoveAction_canceled;
 
-        CanShoot = true;
+        shootAction.started += ShootAction_started;
+        shootAction.canceled += ShootAction_canceled;
+
+        canShoot = true;
 
         _rb2d = GetComponent<Rigidbody2D>();
+    }
+
+    private void ShootAction_started(InputAction.CallbackContext obj)
+    {
+        shootHeld = true;
+    }
+    private void ShootAction_canceled(InputAction.CallbackContext obj)
+    {
+        shootHeld = false;
     }
 
     private void MoveAction_started(InputAction.CallbackContext obj)
@@ -47,11 +60,11 @@ public class PlayerController : MonoBehaviour
         moveValue = 0;
     }
 
-    private void OnShoot()
+    private void ShootBullet()
     {
-        if (CanShoot)
+        if (canShoot)
         {
-            Instantiate(BulletObject, BulletSpawnPoint, Quaternion.identity);
+            Instantiate(BulletObject, BulletSpawnPoint.position, Quaternion.identity);
 
             StartCoroutine(ShootDelay());
         }
@@ -61,22 +74,30 @@ public class PlayerController : MonoBehaviour
     {
         if (true)
         {
-            CanShoot = false;
+            canShoot = false;
 
             yield return new WaitForSeconds(ShootTimer);
 
-            CanShoot = true;
+            canShoot = true;
         }
     }
 
     private void FixedUpdate()
     {
         _rb2d.velocity = new Vector2(0.0f, moveValue);
+
+        if (canShoot && shootHeld)
+        {
+            ShootBullet();
+        }
     }
 
     private void OnDestroy()
     {
         moveAction.started -= MoveAction_started;
         moveAction.canceled -= MoveAction_canceled;
+
+        shootAction.started -= ShootAction_started;
+        shootAction.canceled -= ShootAction_canceled;
     }
 }
