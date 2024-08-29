@@ -173,4 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyHealth: 4
   EnemySpeed: 1
+  StaggerTimer: 0.4
   EnemyValue: 30
