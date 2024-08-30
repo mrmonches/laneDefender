@@ -6,6 +6,8 @@ public class BulletController : MonoBehaviour
 
     [SerializeField] private float BulletSpeed;
 
+    [SerializeField] private GameObject ExplosionObject;
+
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
@@ -14,24 +16,10 @@ public class BulletController : MonoBehaviour
     }
 
     /// <summary>
-    /// Trigger to check if hit enemy or barrier
+    /// Checks collision against possible types
+    /// Also generates explosion when conditions are met
     /// </summary>
     /// <param name="collision"></param>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy")) 
-        {
-            BaseEnemyController BEC = collision.gameObject.GetComponent<BaseEnemyController>();
-
-            BEC.DamageTaken();
-        }
-
-        if (!collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -39,6 +27,8 @@ public class BulletController : MonoBehaviour
             BaseEnemyController BEC = collision.gameObject.GetComponent<BaseEnemyController>();
 
             BEC.DamageTaken();
+
+            Instantiate(ExplosionObject, collision.GetContact(0).point, Quaternion.identity);
         }
 
         if (!collision.gameObject.CompareTag("Player"))

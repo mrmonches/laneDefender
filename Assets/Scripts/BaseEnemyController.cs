@@ -79,7 +79,7 @@ public class BaseEnemyController : MonoBehaviour
     /// Trigger to check if enemy collided with player or back barrier
     /// </summary>
     /// <param name="collision"></param>
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Barrier")) &&  !isDead)
         {
