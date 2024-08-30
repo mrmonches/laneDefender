@@ -17,6 +17,9 @@ public class BaseEnemyController : MonoBehaviour
 
     private Rigidbody2D _rb2d;
 
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip HitClip, DeathClip, LifeClip;
+
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
@@ -28,8 +31,14 @@ public class BaseEnemyController : MonoBehaviour
         _rb2d.velocity = new Vector2(-EnemySpeed, 0.0f);
 
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// When called, damage is "taken" by the enemy
+    /// Also handles logic if enemy dies
+    /// </summary>
     public void DamageTaken()
     {
         EnemyHealth--;
@@ -48,10 +57,16 @@ public class BaseEnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine to allow for a stagger
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator DamageStagger()
     {
         if (true)
         {
+            _audioSource.PlayOneShot(HitClip);
+
             _rb2d.velocity = Vector2.zero;
 
             yield return new WaitForSeconds(StaggerTimer);
@@ -60,18 +75,32 @@ public class BaseEnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Trigger to check if enemy collided with player or back barrier
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Barrier")) &&  !isDead)
         {
+            _gameManager.UpdateLives();
+
+            _audioSource.PlayOneShot(LifeClip);
+
             Destroy(gameObject);
         }
     }
 
+    /// <summary>
+    /// Coroutine to delay enemy's destruction so animations can run
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator KillDelay()
     {
         if (true)
         {
+            _audioSource.PlayOneShot(DeathClip);
+
             _rb2d.velocity = Vector2.zero;
 
             _animator.SetTrigger("IsKilled");

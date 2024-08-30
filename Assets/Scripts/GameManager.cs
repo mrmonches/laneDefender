@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text ScoreText;
     [SerializeField] private TMP_Text LivesText;
 
+    [SerializeField] private GameObject LoseScreenObject;
+    [SerializeField] private GameObject HighScoreNotice;
+
+    [SerializeField] private AudioSource MusicSource;
+
     private void Awake()
     {
         currentLives = MaxLives;
@@ -21,6 +27,11 @@ public class GameManager : MonoBehaviour
         HighScoreText.text = "HighScore: " + _playerStats.PlayerHighScore1;
     }
 
+    /// <summary>
+    /// Updates score under the hood, as well as on the screen
+    /// Score for current game and high score
+    /// </summary>
+    /// <param name="points"></param>
     public void UpdateScore(int points)
     {
         CurrentScore += points;
@@ -29,12 +40,20 @@ public class GameManager : MonoBehaviour
 
         if (CurrentScore >= _playerStats.PlayerHighScore1)
         {
+            if (!HighScoreNotice.activeSelf)
+            {
+                HighScoreNotice.SetActive(true);
+            }
+
             _playerStats.PlayerHighScore1 = CurrentScore;
 
             HighScoreText.text = "High Score: " + _playerStats.PlayerHighScore1;
         }
     }
 
+    /// <summary>
+    /// Updates lives by taking away from current count
+    /// </summary>
     public void UpdateLives()
     {
         currentLives--;
@@ -43,7 +62,23 @@ public class GameManager : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            print("dead");
+            LoseScreenObject.SetActive(true);
+
+            MusicSource.Stop();
+
+            Time.timeScale = 0.0f;
         }
+    }
+
+    public void ReloadScene()
+    {
+        Time.timeScale = 1.0f;
+
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
