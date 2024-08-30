@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8215360165041393693}
   - component: {fileID: 3312117536301032959}
   - component: {fileID: 3594615000953533013}
+  - component: {fileID: 2692443153220806116}
   m_Layer: 0
   m_Name: Snail
   m_TagString: Enemy
@@ -173,5 +174,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyHealth: 4
   EnemySpeed: 1
-  StaggerTimer: 0.4
+  StaggerTimer: 0.5
   EnemyValue: 30
+--- !u!95 &2692443153220806116
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7795884615816095755}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a378d1fc23df28842893fbdddb3e0f2d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

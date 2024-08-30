@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject BulletObject;
     [SerializeField] private Transform BulletSpawnPoint;
 
+    [SerializeField] private Animator _animator;
+
     private bool canShoot;
     private bool shootHeld;
 
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         shootHeld = true;
     }
+
     private void ShootAction_canceled(InputAction.CallbackContext obj)
     {
         shootHeld = false;
@@ -65,6 +68,8 @@ public class PlayerController : MonoBehaviour
         if (canShoot)
         {
             Instantiate(BulletObject, BulletSpawnPoint.position, Quaternion.identity);
+
+            _animator.SetTrigger("IsShot");
 
             StartCoroutine(ShootDelay());
         }
