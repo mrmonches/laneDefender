@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int MaxLives;
     private int currentLives;
 
-    [SerializeField] private PlayerStats _playerStats;
-
     [SerializeField] private int CurrentScore;
 
     [SerializeField] private TMP_Text HighScoreText;
@@ -24,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         currentLives = MaxLives;
 
-        HighScoreText.text = "HighScore: " + _playerStats.PlayerHighScore1;
+        HighScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
     }
 
     /// <summary>
@@ -38,16 +36,16 @@ public class GameManager : MonoBehaviour
 
         ScoreText.text = "Score: " + CurrentScore;
 
-        if (CurrentScore >= _playerStats.PlayerHighScore1)
+        if (CurrentScore >= PlayerPrefs.GetInt("HighScore"))
         {
             if (!HighScoreNotice.activeSelf)
             {
                 HighScoreNotice.SetActive(true);
             }
 
-            _playerStats.PlayerHighScore1 = CurrentScore;
+            PlayerPrefs.SetInt("HighScore", CurrentScore);
 
-            HighScoreText.text = "High Score: " + _playerStats.PlayerHighScore1;
+            HighScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
         }
     }
 
@@ -72,6 +70,8 @@ public class GameManager : MonoBehaviour
 
     public void ReloadScene()
     {
+        PlayerPrefs.Save();
+
         Time.timeScale = 1.0f;
 
         SceneManager.LoadScene(0);
@@ -79,6 +79,13 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        PlayerPrefs.Save();
+
         Application.Quit();
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.Save();
     }
 }

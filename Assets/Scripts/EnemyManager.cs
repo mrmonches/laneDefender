@@ -107,6 +107,7 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     private void RandomEnemy()
     {
+        // Same bug as for RandomLane
         enemyChoice = Random.Range(0, 3);
 
         if (enemyChoice == 3)

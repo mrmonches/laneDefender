@@ -1689,13 +1689,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4625954259164620794, guid: faefd812cf843a44fae76b8ee1ba3f24, type: 3}
+      propertyPath: EnemySpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6517749447102070908, guid: faefd812cf843a44fae76b8ee1ba3f24, type: 3}
       propertyPath: m_Name
       value: Snake
       objectReference: {fileID: 0}
     - target: {fileID: 8191098215671309978, guid: faefd812cf843a44fae76b8ee1ba3f24, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.508738
+      value: 8.36
       objectReference: {fileID: 0}
     - target: {fileID: 8191098215671309978, guid: faefd812cf843a44fae76b8ee1ba3f24, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2363,6 +2367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1283762505}
   - component: {fileID: 1283762504}
+  - component: {fileID: 1283762506}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2383,7 +2388,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLives: 3
-  _playerStats: {fileID: 11400000, guid: 8e08093d0231248499226c30016ef59c, type: 2}
   CurrentScore: 0
   HighScoreText: {fileID: 898392270}
   ScoreText: {fileID: 1975930357}
@@ -2406,6 +2410,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1283762506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283762503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be64749dca8ce942927b4f8ebc52a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1359109241
 PrefabInstance:
   m_ObjectHideFlags: 0
